@@ -1,0 +1,94 @@
+#PS16P2
+#Alexander Kazantzis
+#4-18-26
+
+#Car Info
+class CarInfo:
+    def __init__(self, CarMake, CarModel, StickerPri):
+        self.CarMake = CarMake
+        self.CarModel = CarModel
+        self.StickerPri = float(StickerPri)
+        self.DscntRte = 0.90
+    def Get_DscntPri(self):
+        # get the discounted price
+        return float(self.StickerPri)*float(self.DscntRte)
+
+    def Show_CarInfo(self):
+        print(f"---{self.CarMake} {self.CarModel}---")
+        print(f"Sticker Price: ${self.StickerPri:,.2f}")
+        print(f"Discounted Price(90%): ${self.Get_DscntPri():,.2f}")
+#Sports Car
+class Sports(CarInfo):
+    def __init__(self, CarMake, CarModel, StickerPri):
+        super().__init__(CarMake, CarModel, StickerPri)
+        self.options = {
+            "SportsWhl": {"price": 1000.00, "selected": False},
+            "SportsEng": {"price": 3000.00, "selected": False},
+            "SportsInt": {"price": 2000.00, "selected": False}
+        }
+
+    def set_option(self, option_name, choice):
+        """Sets option to True if choice is 'Y' or 'y'."""
+        if option_name in self.options:
+            if choice.upper() == 'Y':
+                self.options[option_name]["selected"] = True
+
+    def price_with_options(self):
+        """Calculates price with added sport options."""
+        total = self.Get_DscntPri()
+        print("\nSelected Options:")
+        for name, data in self.options.items():
+            if data["selected"]:
+                total += data["price"]
+                print(f"- {name}: ${data['price']:,.2f}")
+        return total
+#Luxury Car
+class Luxury(CarInfo):
+    def __init__(self, CarMake, CarModel, StickerPri):
+        super().__init__(CarMake, CarModel, StickerPri)
+        # Overriding options with Luxury options
+        self.options = {
+            "GPS": {"price": 5000.00, "selected": False},
+            "Self-Driving": {"price": 10000.00, "selected": False}
+        }
+
+    def set_option(self, option_name, choice):
+        """Overrides parent options to set luxury options."""
+        if option_name in self.options:
+            if choice.upper() == 'Y':
+                self.options[option_name]["selected"] = True
+
+    def price_with_options(self):
+        """Calculates price with added luxury options."""
+        total = self.Get_DscntPri()
+        print("\nSelected Luxury Options:")
+        for name, data in self.options.items():
+            if data["selected"]:
+                total += data["price"]
+                print(f"- {name}: ${data['price']:,.2f}")
+        return total
+
+#Test return
+def main():
+    # 1. Test Sport Car
+    my_sport = Sports("Ford", "Mustang", 40000)
+    my_sport.Show_CarInfo()
+    my_sport.set_option("SportsWhl", "Y")
+    my_sport.set_option("SportsEng", "Y")
+    my_sport.set_option("SportsInt", "N")
+    
+    final_sport_price = my_sport.price_with_options()
+    print(f"Final Sport Price: ${final_sport_price:,.2f}")
+
+    # 2. Test Luxury Car
+    my_luxury = Luxury("Mercedes", "S-Class", 100000)
+    my_luxury.Show_CarInfo()
+    my_luxury.set_option("GPS", "Y")
+    my_luxury.set_option("Self-Driving", "Y")
+    
+    final_luxury_price = my_luxury.price_with_options()
+    print(f"Final Luxury Price: ${final_luxury_price:,.2f}")
+
+if __name__ == "__main__":
+    main()
+    
