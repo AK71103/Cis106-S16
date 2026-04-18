@@ -1,0 +1,51 @@
+#PS16P1
+#Alexander Kazantzis
+#4-18-26
+
+
+#Employee
+class Employee:
+    Raise_Amt = 1.04
+    
+    def __init__(self,FstNme,LstNme,EmpPay):
+        self.FstNme = FstNme
+        self.LstNme = LstNme
+        self.EmpPay = EmpPay
+        self.Email = FstNme + '.' + LstNme + '@email.com'
+    def FullName(self):
+        return '{} {}'.format(self.FstNme, self.LstNme)
+    
+    def Apply_Raise(self):
+        self.RasdPay = float(self.EmpPay) * float(self.Raise_Amt)
+        return self.RasdPay
+#Manager
+class Manager(Employee):
+    Raise_Amt = 1.40
+    
+    def LngTrmBns(self):
+        self.RasdPay = float(self.EmpPay) * float(self.Raise_Amt)
+        return self.RasdPay
+#Executive
+class Executive(Employee):
+    Raise_Amt = 1.50
+  
+    def ExecPay(self):
+        self.RasdPay = (2 * float(self.EmpPay)) * float(self.Raise_Amt)
+        return self.RasdPay
+#input
+FstNme = input("Enter Employee's First Name: ")
+LstNme = input("Enter Employee's Last Name: ")
+EmpPay = int(input("Enter Employee's pay:$"))
+
+
+Dvlpr_1 = Employee(FstNme, LstNme, EmpPay)
+Mngmnt_1 = Manager(FstNme, LstNme, EmpPay)
+Execut_1 = Executive(FstNme, LstNme, EmpPay)
+
+#Output
+print(Dvlpr_1.FullName())
+print(Dvlpr_1.EmpPay)
+print(Dvlpr_1.Apply_Raise())
+print(Mngmnt_1.LngTrmBns())
+print(Execut_1.ExecPay())
+print(Dvlpr_1.Email)
